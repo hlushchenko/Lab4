@@ -6,7 +6,8 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Binary test = new Binary("D:/пример.bmp");
+            test.Read();
         }
     }
 }
