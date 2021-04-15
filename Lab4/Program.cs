@@ -7,7 +7,6 @@ namespace Lab4
         static void Main(string[] args)
         {
             Utilities.GetInfo();
-            Console.ReadLine();
         }
     }
 }

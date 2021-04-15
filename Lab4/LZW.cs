@@ -8,7 +8,27 @@ namespace Lab4
 {
     class LZW
     {
-        private void TypeOfWork(string str)
+        private string _type;
+        public string _archieveName;
+        public string _file;
+
+        public string Type
+        {
+            get => _type;
+            set
+            {
+                if (value == "compress" || value == "decompress")
+                    _type = value;
+            }
+        }
+
+        public LZW(string type, string archieveName, string file = null)
+        {
+            _type = type;
+            _archieveName = archieveName;
+        }
+
+        private void ArgsParser(string str)
         {
             string[] words = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             string type = words[0];
