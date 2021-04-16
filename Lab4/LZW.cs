@@ -1,42 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Lab4
 {
     class LZW
     {
-        private string _type;
-        public string _archieveName;
-        public string _file;
+        private byte[] _data;
 
-        public string Type
+        public LZW(byte[] data)
         {
-            get => _type;
-            set
-            {
-                if (value == "compress" || value == "decompress")
-                    _type = value;
-            }
+            _data = data;
         }
 
-        public LZW(string type, string archieveName, string file = null)
+        public string Compress()
         {
-            _type = type;
-            _archieveName = archieveName;
+            List<byte> table = CreateTable();
+            return null;
         }
 
-        private void ArgsParser(string str)
+        private List<byte> CreateTable()
         {
-            string[] words = str.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            string type = words[0];
-            string archive = words[1];
-            if (type == "compress")
+            List<byte> table = new List<byte>();
+            foreach (var bt in _data)
             {
-                string input = words[2];
+                if(!table.Contains(bt)) table.Add(bt);
             }
+            return table;
         }
     }
 }
