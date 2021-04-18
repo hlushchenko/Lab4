@@ -24,5 +24,16 @@ namespace Lab4
             for (int i = 0; i < count; i++) Console.Write('=');
             Console.Write('\n');
         }
+    
+        public static bool ArrayContains(uint[] arr, uint num)
+        {
+            foreach (var item in arr)
+            {
+                if (num == item)
+                    return true;
+            }
+            return false;
+        }
+
     }
 }
