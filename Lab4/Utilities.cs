@@ -57,5 +57,14 @@ namespace Lab4
             arr[arr.Length - 1] = elem;
         }
 
+        public static uint[] RemoveByIndex(ref uint[] arr, int index)
+        {
+            uint[] newArr = new uint[arr.Length-1];
+            for (int i = index; i < arr.Length-1; i++)
+            {
+                newArr[i] = arr[i+1];
+            }
+            return newArr;
+        }
     }
 }
