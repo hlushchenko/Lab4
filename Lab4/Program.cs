@@ -6,8 +6,8 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
-            Binary test = new Binary("D:/пример.bmp");
-            test.Read();
+            byte[] arr = { 12, 13, 14, 16, 10, 12, 14};
+            uint[] test = LZW.Encode("ABRACADABRBRABRABRA");
         }
     }
 }

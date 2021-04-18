@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Lab4
 {
@@ -11,51 +12,35 @@ namespace Lab4
         {
             _data = data;
         }
-        
-        //41 42 52 41 43 41 44 41 42 52 41 42 52 41 42 52
-        //41 42 52 4143 4144 4142 5241 4252 414252
 
-        public static uint[] Encode(byte[] decompressedFileBytes)
+        public static uint[] Encode(string uncompressed)
         {
-            uint[] dictionary = CreateDictionary(decompressedFileBytes);
-            byte prev = 0, next;
-            int index = -1;
-            while(index != decompressedFileBytes.Length)
+            Dictionary<string, uint> dictionary = CreateDictionaryEncode();
+            string p = "";
+            uint[] result = Array.Empty<uint>();
+
+            foreach (char c in uncompressed)
             {
-                next = decompressedFileBytes[index++];
-                if (Utilities.ArrayContains(dictionary, Convert.ToUInt32(prev+next)))
-                    prev += next;
+                if (dictionary.ContainsKey(p + c))
+                {
+                    p += c;
+                }
                 else
                 {
-                    Utilities.ArrayPush(ref dictionary, Convert.ToUInt32(prev + next));
-                    prev = next;
+                    Utilities.ArrayPush(ref result, dictionary[p]);
+                    dictionary.Add(p + c, (uint)dictionary.Count);
+                    p = c.ToString();
                 }
             }
-            return dictionary;
+            Utilities.ArrayPush(ref result, dictionary[p]);
+            return result;
         }
 
-        public static byte[] Decode(uint[] compressedByted)
+        public static Dictionary<string, uint> CreateDictionaryEncode()
         {
-
-        }
-
-        public static uint[] CreateDictionary(byte[] decompressedFileBytes)
-        {
-            uint[] dictionary = new uint[0];
-            for (int i = 0; i < decompressedFileBytes.Length; i++)
-            {
-                Utilities.ArrayPush(ref dictionary, decompressedFileBytes[i]);
-            }
-            return dictionary;
-        }
-
-        public static byte[] CreateDictionary(uint[] decompressedFileBytes)
-        {
-            byte[] dictionary = new byte[0];
-            for (int i = 0; i < decompressedFileBytes.Length; i++)
-            {
-                Utilities.ArrayPush(ref dictionary, decompressedFileBytes[i]);
-            }
+            Dictionary<string, uint> dictionary = new Dictionary<string, uint>();
+            for (int i = 0; i < 256; i++)
+                dictionary.Add(((char)i).ToString(), (uint)i);
             return dictionary;
         }
     }
