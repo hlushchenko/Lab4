@@ -37,25 +37,35 @@ namespace Lab4
             Write(IntsToBytes(data));
         }
 
-        private byte[] IntsToBytes(uint[] ints)
+        public static byte[] IntsToBytes(uint[] ints)
         {
             List<byte> output = new List<byte>();
             int currentSize = 8;
             int pos = 0;
             foreach (var number in ints)
             {
-                foreach (var bit in IntToBits(number))
+                if (number >= Math.Pow(2, currentSize)) currentSize++;
+                foreach (var bit in NormalizeBits(IntToBits(number), currentSize))
                 {
                     if (pos % 8 == 0)
                     {
                         output.Add(0);
                     }
+                    if (bit)
+                    {
+                        output[^1] = (byte) (output[^1] | Pow2((byte) (7-pos%8)));
+                    }
 
-                    output[^1] = 0;
+                    pos++;
                 }
             }
             
             return output.ToArray();
+        }
+
+        public static byte Pow2(byte power)
+        {
+            return power == 0 ? 1 : (byte) ((byte)2 * Pow2((byte) (power-1)));
         }
 
         public static bool[] IntToBits(uint n)
