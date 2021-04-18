@@ -35,7 +35,23 @@ namespace Lab4
             return false;
         }
 
+        public static bool ArrayContains(byte[] arr, byte num)
+        {
+            foreach (var item in arr)
+            {
+                if (num == item)
+                    return true;
+            }
+            return false;
+        }
+
         public static void ArrayPush(ref uint[] arr, uint elem)
+        {
+            Array.Resize(ref arr, arr.Length + 1);
+            arr[arr.Length - 1] = elem;
+        }
+
+        public static void ArrayPush(ref byte[] arr, byte elem)
         {
             Array.Resize(ref arr, arr.Length + 1);
             arr[arr.Length - 1] = elem;

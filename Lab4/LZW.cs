@@ -15,7 +15,7 @@ namespace Lab4
         //41 42 52 41 43 41 44 41 42 52 41 42 52 41 42 52
         //41 42 52 4143 4144 4142 5241 4252 414252
 
-        public static uint[] Compress(byte[] decompressedFileBytes)
+        public static uint[] Encode(byte[] decompressedFileBytes)
         {
             uint[] dictionary = CreateDictionary(decompressedFileBytes);
             byte prev = 0, next;
@@ -31,20 +31,12 @@ namespace Lab4
                     prev = next;
                 }
             }
-            
-            /*uint[] arr = System.Array.Empty<uint>();
-            foreach (var singleByte in decompressedFileBytes)
-            {
-                if (Utilities.ArrayContains(arr, singleByte))
-                {
-                    Utilities.ArrayPush(ref arr, singleByte);
-                }
-                else
-                    Utilities.ArrayPush(ref arr, singleByte);
-            }
-            return arr;*/
-            Console.ReadLine();
             return dictionary;
+        }
+
+        public static byte[] Decode(uint[] compressedByted)
+        {
+
         }
 
         public static uint[] CreateDictionary(byte[] decompressedFileBytes)
@@ -57,5 +49,14 @@ namespace Lab4
             return dictionary;
         }
 
+        public static byte[] CreateDictionary(uint[] decompressedFileBytes)
+        {
+            byte[] dictionary = new byte[0];
+            for (int i = 0; i < decompressedFileBytes.Length; i++)
+            {
+                Utilities.ArrayPush(ref dictionary, decompressedFileBytes[i]);
+            }
+            return dictionary;
+        }
     }
 }
