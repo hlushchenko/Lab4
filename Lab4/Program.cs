@@ -6,7 +6,13 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
-            var a = Binary.IntsToBytes(new[] {255u, 256u});
+            var file = new Binary("D:/пример3.dat");
+            file.Write(new []{ 255u, 511u, 625u, 12u});
+            var a = file.ReadInts();
+            foreach (var b in a)
+            {
+                Console.WriteLine(b);
+            }
         }
     }
 }
