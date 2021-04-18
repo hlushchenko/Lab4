@@ -40,9 +40,22 @@ namespace Lab4
         private byte[] IntsToBytes(uint[] ints)
         {
             List<byte> output = new List<byte>();
-            byte currentSize = 8;
+            int currentSize = 8;
+            int pos = 0;
+            foreach (var number in ints)
+            {
+                foreach (var bit in IntToBits(number))
+                {
+                    if (pos % 8 == 0)
+                    {
+                        output.Add(0);
+                    }
+
+                    output[^1] = 0;
+                }
+            }
             
-            return null;
+            return output.ToArray();
         }
 
         public static bool[] IntToBits(uint n)
@@ -53,7 +66,23 @@ namespace Lab4
                 bits.Add(n%2 != 0);
                 n /= 2;
             }
+            for (int i = 0; i < bits.Count/2; i++)
+            {
+                bits[i] = bits[i] ^ bits[^(i+1)];
+                bits[^(i+1)] = bits[^(i+1)] ^ bits[i];
+                bits[i] = bits[i] ^ bits[^(i+1)];
+            }
             return bits.ToArray();
+        }
+
+        public static bool[] NormalizeBits(bool[] bits, int size)
+        {
+            bool[] result = new bool[size];
+            for (int i = 1; i <= bits.Length; i++)
+            {
+                result[^i] = bits[^i];
+            }
+            return result;
         }
     }
 }

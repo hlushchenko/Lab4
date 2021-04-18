@@ -6,7 +6,7 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
-            var a = Binary.IntToBits(8);
+            var a = Binary.NormalizeBits(Binary.IntToBits(5), 8);
         }
     }
 }
