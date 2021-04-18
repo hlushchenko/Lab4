@@ -35,5 +35,11 @@ namespace Lab4
             return false;
         }
 
+        public static void ArrayPush(ref uint[] arr, uint elem)
+        {
+            Array.Resize(ref arr, arr.Length + 1);
+            arr[arr.Length - 1] = elem;
+        }
+
     }
 }
