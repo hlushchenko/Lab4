@@ -13,7 +13,34 @@ namespace Lab4
             _data = data;
         }
 
-        public static uint[] Encode(string uncompressed)
+        public static uint[] Encode(byte[] bytes)
+        {
+            Dictionary<List<byte>, uint> dictionary = CreateDictionaryEncode();
+            List<byte> p = new List<byte>();
+            //byte[] p = Array.Empty<byte>();
+            uint[] result = Array.Empty<uint>();
+            //byte p = 0;
+            foreach (byte c in bytes)
+            {
+                
+                //Utilities.ArrayPush(ref p, c)
+/*                if (dictionary.ContainsKey()
+                {
+                    p += c;
+                }
+                else
+                {
+                    Utilities.ArrayPush(ref result, dictionary[p]);
+                    dictionary.Add((byte)(p + c), (uint)dictionary.Count);
+                    p = c;
+                }*/
+            }
+            Utilities.ArrayPush(ref result, dictionary[p]);
+            return result;
+        }
+
+
+        /*public static uint[] Encode(string uncompressed)
         {
             Dictionary<string, uint> dictionary = CreateDictionaryEncode();
             string p = "";
@@ -34,7 +61,7 @@ namespace Lab4
             }
             Utilities.ArrayPush(ref result, dictionary[p]);
             return result;
-        }
+        }*/
 
         public static string Decode(uint[] compressed)
         {
@@ -57,11 +84,16 @@ namespace Lab4
             return decompressed;
         }
 
-        public static Dictionary<string, uint> CreateDictionaryEncode()
+        public static Dictionary<List<byte>, uint> CreateDictionaryEncode()
         {
-            Dictionary<string, uint> dictionary = new Dictionary<string, uint>();
+            Dictionary<List<byte>, uint> dictionary = new Dictionary<List<byte>, uint>();
             for (int i = 0; i < 256; i++)
-                dictionary.Add(((char)i).ToString(), (uint)i);
+            {
+                List<byte> a = new List<byte>();
+                a.Add((byte)i);
+                dictionary.Add(a, (uint)i);
+            }
+                
             return dictionary;
         }
 
