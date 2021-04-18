@@ -6,8 +6,9 @@ namespace Lab4
     {
         static void Main(string[] args)
         {
-            Binary test = new Binary("D:/пример.bmp");
-            test.Read();
+            var file1 = new Binary("D:/пример.bmp");
+            var file2 = new Binary("D:/пример2.bmp");
+            file2.Write(file1.Read());
         }
     }
 }

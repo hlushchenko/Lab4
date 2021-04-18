@@ -6,18 +6,27 @@ namespace Lab4
     public class Binary
     {
         private string _path;
-        public byte[] Data;
 
         public Binary(string path)
         {
             _path = path;
         }
 
-        public void Read()
+        public byte[] Read()
         {
+            byte[] data;
             using (var br = new BinaryReader(File.Open(_path, FileMode.Open)))
             {
-                Data = br.ReadBytes(Convert.ToInt32(br.BaseStream.Length));
+                data = br.ReadBytes(Convert.ToInt32(br.BaseStream.Length));
+            }
+            return data;
+        }
+
+        public void Write(byte[] data)
+        {
+            using (var bw = new BinaryWriter(File.Open(_path, FileMode.OpenOrCreate)))
+            {
+                bw.Write(data);
             }
         }
     }
