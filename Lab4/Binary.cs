@@ -37,12 +37,12 @@ namespace Lab4
                 {
                     if (pos % currentSize == 0)
                     {
-                        pos =0;
+                        pos = 0;
                         result.Add(0);
                     }
                     result[^1] += Convert.ToUInt32(Math.Pow(2, currentSize-pos-1) * ((bt & (1 << i)) == 0 ? 0 : 1));
                     pos++;
-                    if (result[^1] >= Math.Pow(2, currentSize) - 1)
+                    if (result[^1] == Math.Pow(2, currentSize) - 1)
                     {
                         currentSize++;
                         pos = 0;
@@ -75,7 +75,7 @@ namespace Lab4
             int pos = 0;
             foreach (var number in ints)
             {
-                if (number >= Math.Pow(2, currentSize)) currentSize++;
+                
                 foreach (var bit in NormalizeBits(IntToBits(number), currentSize))
                 {
                     if (pos % 8 == 0)
@@ -90,6 +90,7 @@ namespace Lab4
 
                     pos++;
                 }
+                if (number >= Math.Pow(2, currentSize)-1) currentSize++;
             }
 
 
