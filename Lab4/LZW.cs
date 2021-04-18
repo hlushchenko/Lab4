@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lab4
 {
@@ -10,21 +11,51 @@ namespace Lab4
         {
             _data = data;
         }
+        
+        //41 42 52 41 43 41 44 41 42 52 41 42 52 41 42 52
+        //41 42 52 4143 4144 4142 5241 4252 414252
 
-        public string Compress()
+        public static uint[] Compress(byte[] decompressedFileBytes)
         {
-            List<byte> table = CreateTable();
-            return null;
-        }
-
-        private List<byte> CreateTable()
-        {
-            List<byte> table = new List<byte>();
-            foreach (var bt in _data)
+            uint[] dictionary = CreateDictionary(decompressedFileBytes);
+            byte prev = 0, next;
+            int index = -1;
+            while(index != decompressedFileBytes.Length)
             {
-                if(!table.Contains(bt)) table.Add(bt);
+                next = decompressedFileBytes[index++];
+                if (Utilities.ArrayContains(dictionary, Convert.ToUInt32(prev+next)))
+                    prev += next;
+                else
+                {
+                    Utilities.ArrayPush(ref dictionary, Convert.ToUInt32(prev + next));
+                    prev = next;
+                }
             }
-            return table;
+            
+            /*uint[] arr = System.Array.Empty<uint>();
+            foreach (var singleByte in decompressedFileBytes)
+            {
+                if (Utilities.ArrayContains(arr, singleByte))
+                {
+                    Utilities.ArrayPush(ref arr, singleByte);
+                }
+                else
+                    Utilities.ArrayPush(ref arr, singleByte);
+            }
+            return arr;*/
+            Console.ReadLine();
+            return dictionary;
         }
+
+        public static uint[] CreateDictionary(byte[] decompressedFileBytes)
+        {
+            uint[] dictionary = new uint[0];
+            for (int i = 0; i < decompressedFileBytes.Length; i++)
+            {
+                Utilities.ArrayPush(ref dictionary, decompressedFileBytes[i]);
+            }
+            return dictionary;
+        }
+
     }
 }
