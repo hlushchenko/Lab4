@@ -4,7 +4,7 @@ namespace Lab4
 {
     public class RLE
     {
-        private byte[] Compress(byte[] input)
+        public byte[] Compress(byte[] input)
         {
             List<(byte, byte)> rleList = new List<(byte, byte)>();
             byte prev = input[0];
@@ -32,5 +32,19 @@ namespace Lab4
 
             return output;
         }
+        
+        public static byte[] Decompress(byte[] input)
+        {
+            List<byte> output = new List<byte>();
+            for (int i = 0; i < input.Length / 2; i++)
+            {
+                for (int j = 0; j < input[i * 2 + 1]; j++)
+                {
+                    output.Add(input[i * 2]);
+                }
+            }
+            return output.ToArray();
+        }
+        
     }
 }
