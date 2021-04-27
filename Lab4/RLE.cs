@@ -33,7 +33,7 @@ namespace Lab4
             return output;
         }
         
-        public static byte[] Decompress(byte[] input)
+        public byte[] Decompress(byte[] input)
         {
             List<byte> output = new List<byte>();
             for (int i = 0; i < input.Length / 2; i++)

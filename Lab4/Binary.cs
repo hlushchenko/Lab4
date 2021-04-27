@@ -25,7 +25,7 @@ namespace Lab4
         
         public void Write(byte[] data)
         {
-            using (var bw = new BinaryWriter(File.Open(_path, FileMode.CreateNew)))
+            using (var bw = new BinaryWriter(File.Open(_path, FileMode.Create)))
             {
                 bw.Write(data);
             }
