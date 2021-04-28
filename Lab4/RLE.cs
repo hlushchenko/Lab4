@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
 
 namespace Lab4
 {
@@ -45,6 +48,57 @@ namespace Lab4
             }
             return output.ToArray();
         }
-        
+
+        public byte[] FileComposer(Binary[] files)
+        {
+            List<byte> output = new List<byte>();
+            foreach (var file in files)
+            {
+                byte[] header = new byte[32];
+                byte[] name = Encoding.ASCII.GetBytes(file.Filename);
+                for (int i = 0; i < name.Length; i++)
+                {
+                    header[32-name.Length+i] = name[i];
+                }
+                foreach (var bt in header)
+                {
+                    output.Add(bt);
+                }
+                foreach (var bt in file.Read())
+                {
+                    output.Add(bt);
+                }
+            }
+            return output.ToArray();
+        }
+
+        public List<List<byte>> FileDecomposer(byte[] input, out string[] filenames)
+        {
+            List<string> names = new List<string>();
+            List<List<byte>> files = new List<List<byte>>();
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] == 0 && input[i + 1] == 0)
+                {
+                    List<byte> currentName = new List<byte>();
+                    for (int j = i; j < i + 32; j++)
+                    {
+                        if (input[j] != 0)
+                        {
+                            currentName.Add(input[j]);
+                        }
+                    }
+                    names.Add(Encoding.ASCII.GetString(currentName.ToArray()));
+                    files.Add(new List<byte>());
+                    i += 32;
+                }
+
+                files[^1].Add(input[i]);
+            }
+            
+
+            filenames = names.ToArray();
+            return files;
+        }
     }
 }

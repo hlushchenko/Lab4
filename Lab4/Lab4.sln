@@ -12,5 +12,6 @@ Global
 		{328F4FEF-B134-44A4-AE0A-A9152CECD66B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{328F4FEF-B134-44A4-AE0A-A9152CECD66B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{328F4FEF-B134-44A4-AE0A-A9152CECD66B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{328F4FEF-B134-44A4-AE0A-A9152CECD66B}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

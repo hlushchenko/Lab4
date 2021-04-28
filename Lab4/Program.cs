@@ -10,18 +10,29 @@ namespace Lab4
             try
             {
                 var arg = new ArgsParser(args);
-                var uncompressed = new Binary(arg.UncompressedPath);
+                var uncompressed = new Binary[arg.UncompressedPath.Length];
+                for (int i = 0; i < arg.UncompressedPath.Length; i++)
+                {
+                    uncompressed[i] = new Binary(arg.UncompressedPath[i]);
+                }
                 var compressed = new Binary(arg.CompressedPath);
+                
                 var rle = new RLE();
                 if (arg.Compress)
                 {
-                    Console.WriteLine($"Compressing {arg.UncompressedPath} into {arg.CompressedPath}...");
-                    compressed.Write(rle.Compress(uncompressed.Read()));
+                    Console.WriteLine($"Compressing files into {arg.CompressedPath}...");
+                    compressed.Write(rle.Compress(rle.FileComposer(uncompressed)));
                 }
                 else
                 {
-                    Console.WriteLine($"Decompressing {arg.CompressedPath} into {arg.UncompressedPath}...");
-                    uncompressed.Write(rle.Decompress(compressed.Read()));
+                    Console.WriteLine($"Decompressing {arg.CompressedPath}...");
+                    string[] names;
+                    var files = rle.FileDecomposer(rle.Decompress(compressed.Read()), out names);
+                    for (int i = 0; i < names.Length; i++)
+                    {
+                        Binary file1 = new Binary(compressed.Filepath + names[i]);
+                        file1.Write(files[i].ToArray());
+                    }
                 }
 
                 Console.WriteLine("Done");
@@ -36,5 +47,6 @@ namespace Lab4
             }
 
         }
+        
     }
 }
